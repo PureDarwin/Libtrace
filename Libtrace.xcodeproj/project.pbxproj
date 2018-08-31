@@ -16,6 +16,8 @@
 		1F1611B62138D6F100795E48 /* trace_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611AB2138D6F100795E48 /* trace_internal.h */; };
 		1F1611B72138D6F100795E48 /* log_encode_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611AC2138D6F100795E48 /* log_encode_types.h */; };
 		1F1611B82138D6F100795E48 /* firehose.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611AD2138D6F100795E48 /* firehose.h */; };
+		1F1611BB2138D91F00795E48 /* libtrace_assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611B92138D91F00795E48 /* libtrace_assert.h */; };
+		1F1611BC2138D91F00795E48 /* libtrace_assert.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F1611BA2138D91F00795E48 /* libtrace_assert.c */; };
 		1F8286B62138C52600AE215C /* os_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F8286B42138C52600AE215C /* os_log.c */; };
 		1F8286BA2138C69B00AE215C /* object_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F8286B92138C69B00AE215C /* object_private.h */; };
 		1F8286BC2138C81500AE215C /* classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8286BB2138C81500AE215C /* classes.m */; };
@@ -31,6 +33,8 @@
 		1F1611AB2138D6F100795E48 /* trace_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_internal.h; sourceTree = "<group>"; };
 		1F1611AC2138D6F100795E48 /* log_encode_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log_encode_types.h; sourceTree = "<group>"; };
 		1F1611AD2138D6F100795E48 /* firehose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = firehose.h; sourceTree = "<group>"; };
+		1F1611B92138D91F00795E48 /* libtrace_assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libtrace_assert.h; sourceTree = "<group>"; };
+		1F1611BA2138D91F00795E48 /* libtrace_assert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = libtrace_assert.c; sourceTree = "<group>"; };
 		1F8286AD2138C2E600AE215C /* libsystem_trace.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsystem_trace.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F8286B42138C52600AE215C /* os_log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = os_log.c; sourceTree = "<group>"; };
 		1F8286B92138C69B00AE215C /* object_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object_private.h; sourceTree = "<group>"; };
@@ -72,6 +76,8 @@
 				1F8286BD2138C95800AE215C /* os_log_s.h */,
 				1F8286B42138C52600AE215C /* os_log.c */,
 				1F8286BB2138C81500AE215C /* classes.m */,
+				1F1611B92138D91F00795E48 /* libtrace_assert.h */,
+				1F1611BA2138D91F00795E48 /* libtrace_assert.c */,
 			);
 			path = libsystem_trace;
 			sourceTree = "<group>";
@@ -118,6 +124,7 @@
 				1F1611B32138D6F100795E48 /* reason_private.h in Headers */,
 				1F1611B52138D6F100795E48 /* overflow.h in Headers */,
 				1F1611B62138D6F100795E48 /* trace_internal.h in Headers */,
+				1F1611BB2138D91F00795E48 /* libtrace_assert.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8286BC2138C81500AE215C /* classes.m in Sources */,
+				1F1611BC2138D91F00795E48 /* libtrace_assert.c in Sources */,
 				1F8286B62138C52600AE215C /* os_log.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
