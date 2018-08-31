@@ -17,18 +17,17 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	if (log == NULL) return false;
 	if (log->magic == OS_LOG_DISABLED_MAGIC) return false;
 
+	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to os_log_type_enabled()");
+	libtrace_precondition(type >= 0 && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to os_log_type_enabled()");
+
 	int bit = 1 << type;
 	if ((log->enabled_mask & bit) == bit)
 		return (log->enabled_values & bit) != 0;
-
-	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to os_log_type_enabled()");
 
 	xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
 	xpc_dictionary_set_string(message, "MessageId", "IsTypeEnabled");
 	xpc_dictionary_set_string(message, "Subsystem", log->subsystem ?: "");
 	xpc_dictionary_set_string(message, "Category", log->category ?: "");
-
-	libtrace_precondition(type > 0 && type < OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to os_log_type_enabled()");
 	xpc_dictionary_set_int64(message, "LogType", type);
 
 	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
