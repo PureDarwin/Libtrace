@@ -6,8 +6,18 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1F8286B62138C52600AE215C /* os_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F8286B42138C52600AE215C /* os_log.c */; };
+		1F8286BA2138C69B00AE215C /* object_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F8286B92138C69B00AE215C /* object_private.h */; };
+		1F8286BC2138C81500AE215C /* classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8286BB2138C81500AE215C /* classes.m */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1F8286AD2138C2E600AE215C /* libsystem_trace.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsystem_trace.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F8286B42138C52600AE215C /* os_log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = os_log.c; sourceTree = "<group>"; };
+		1F8286B92138C69B00AE215C /* object_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object_private.h; sourceTree = "<group>"; };
+		1F8286BB2138C81500AE215C /* classes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = classes.m; sourceTree = "<group>"; };
+		1F8286BD2138C95800AE215C /* os_log_s.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_log_s.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,6 +34,8 @@
 		1F37F7D42138C2A100321E25 = {
 			isa = PBXGroup;
 			children = (
+				1F8286B72138C68300AE215C /* headers */,
+				1F8286B22138C40700AE215C /* libsystem_trace */,
 				1F8286AE2138C2E600AE215C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -36,6 +48,32 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1F8286B22138C40700AE215C /* libsystem_trace */ = {
+			isa = PBXGroup;
+			children = (
+				1F8286BD2138C95800AE215C /* os_log_s.h */,
+				1F8286B42138C52600AE215C /* os_log.c */,
+				1F8286BB2138C81500AE215C /* classes.m */,
+			);
+			path = libsystem_trace;
+			sourceTree = "<group>";
+		};
+		1F8286B72138C68300AE215C /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				1F8286B82138C68600AE215C /* os */,
+			);
+			path = headers;
+			sourceTree = "<group>";
+		};
+		1F8286B82138C68600AE215C /* os */ = {
+			isa = PBXGroup;
+			children = (
+				1F8286B92138C69B00AE215C /* object_private.h */,
+			);
+			path = os;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -43,6 +81,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F8286BA2138C69B00AE215C /* object_private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F8286BC2138C81500AE215C /* classes.m in Sources */,
+				1F8286B62138C52600AE215C /* os_log.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,12 +152,14 @@
 		1F37F7D92138C2A100321E25 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SYSTEM_HEADER_SEARCH_PATHS = "$(SRCROOT)/headers";
 			};
 			name = Debug;
 		};
 		1F37F7DA2138C2A100321E25 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SYSTEM_HEADER_SEARCH_PATHS = "$(SRCROOT)/headers";
 			};
 			name = Release;
 		};
@@ -196,6 +239,7 @@
 					"-lsystem_darwin",
 					"-ldispatch",
 					"-lxpc",
+					"-Wl,-upward-lobjc",
 				);
 				PRODUCT_NAME = system_trace;
 				SDKROOT = macosx;
@@ -272,6 +316,7 @@
 					"-lsystem_darwin",
 					"-ldispatch",
 					"-lxpc",
+					"-Wl,-upward-lobjc",
 				);
 				PRODUCT_NAME = system_trace;
 				SDKROOT = macosx;
