@@ -48,3 +48,17 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 
 	return enabled;
 }
+
+#pragma mark Legacy Functions
+
+os_log_t _os_log_create(void *dso __unused, const char *subsystem, const char *category) {
+	return os_log_create(subsystem, category);
+}
+
+bool os_log_is_enabled(os_log_t log) {
+	return true;
+}
+
+bool os_log_is_debug_enabled(os_log_t log) {
+	return os_log_debug_enabled(log);
+}
