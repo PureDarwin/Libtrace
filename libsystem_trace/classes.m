@@ -24,7 +24,7 @@
 
 #pragma mark -
 
-__private_extern__ const void *_os_log_class(void) {
+__XNU_PRIVATE_EXTERN const void *_os_log_class(void) {
 	return (__bridge const void *)[OS_os_log class];
 }
 
