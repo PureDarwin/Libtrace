@@ -18,7 +18,7 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	if (log->magic == OS_LOG_DISABLED_MAGIC) return false;
 
 	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to os_log_type_enabled()");
-	libtrace_precondition(type >= 0 && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to os_log_type_enabled()");
+	libtrace_precondition(type >= OS_LOG_TYPE_DEFAULT && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to os_log_type_enabled()");
 
 	int bit = 1 << type;
 	if ((log->enabled_mask & bit) == bit)
