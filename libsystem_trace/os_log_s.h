@@ -5,6 +5,9 @@ struct os_log_s {
 	uint32_t magic;
 	const char *subsystem;
 	const char *category;
+
+	int enabled_values;
+	int enabled_mask;
 };
 
 #define OS_LOG_MAGIC			0x584F0001

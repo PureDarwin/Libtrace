@@ -17,6 +17,10 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	if (log == NULL) return false;
 	if (log->magic == OS_LOG_DISABLED_MAGIC) return false;
 
+	int bit = 1 << type;
+	if ((log->enabled_mask & bit) == bit)
+		return (log->enabled_values & bit) != 0;
+
 	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to os_log_type_enabled()");
 
 	xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
@@ -39,6 +43,9 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 	dispatch_release(semaphore);
 	xpc_release(message);
+
+	log->enabled_values |= ((enabled == true) << type);
+	log->enabled_mask |= bit;
 
 	return enabled;
 }
