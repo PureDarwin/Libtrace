@@ -10,7 +10,6 @@
 		1F1611AF2138D6F100795E48 /* log_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611A42138D6F100795E48 /* log_private.h */; };
 		1F1611B12138D6F100795E48 /* log_encode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611A62138D6F100795E48 /* log_encode.h */; };
 		1F1611B32138D6F100795E48 /* reason_private.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611A82138D6F100795E48 /* reason_private.h */; };
-		1F1611B52138D6F100795E48 /* overflow.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611AA2138D6F100795E48 /* overflow.h */; };
 		1F1611B62138D6F100795E48 /* trace_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611AB2138D6F100795E48 /* trace_internal.h */; };
 		1F1611B72138D6F100795E48 /* log_encode_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611AC2138D6F100795E48 /* log_encode_types.h */; };
 		1F1611B82138D6F100795E48 /* firehose.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611AD2138D6F100795E48 /* firehose.h */; };
@@ -25,7 +24,6 @@
 		1F1611A42138D6F100795E48 /* log_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log_private.h; sourceTree = "<group>"; };
 		1F1611A62138D6F100795E48 /* log_encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log_encode.h; sourceTree = "<group>"; };
 		1F1611A82138D6F100795E48 /* reason_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reason_private.h; sourceTree = "<group>"; };
-		1F1611AA2138D6F100795E48 /* overflow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = overflow.h; sourceTree = "<group>"; };
 		1F1611AB2138D6F100795E48 /* trace_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_internal.h; sourceTree = "<group>"; };
 		1F1611AC2138D6F100795E48 /* log_encode_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log_encode_types.h; sourceTree = "<group>"; };
 		1F1611AD2138D6F100795E48 /* firehose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = firehose.h; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 				1F1611A62138D6F100795E48 /* log_encode.h */,
 				1F1611A42138D6F100795E48 /* log_private.h */,
 				1F8286B92138C69B00AE215C /* object_private.h */,
-				1F1611AA2138D6F100795E48 /* overflow.h */,
 				1F1611A82138D6F100795E48 /* reason_private.h */,
 				1F1611AB2138D6F100795E48 /* trace_internal.h */,
 			);
@@ -114,7 +111,6 @@
 				1F1611B72138D6F100795E48 /* log_encode_types.h in Headers */,
 				1F8286BA2138C69B00AE215C /* object_private.h in Headers */,
 				1F1611B32138D6F100795E48 /* reason_private.h in Headers */,
-				1F1611B52138D6F100795E48 /* overflow.h in Headers */,
 				1F1611B62138D6F100795E48 /* trace_internal.h in Headers */,
 				1F1611BB2138D91F00795E48 /* libtrace_assert.h in Headers */,
 			);
