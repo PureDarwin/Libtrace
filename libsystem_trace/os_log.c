@@ -1,7 +1,3 @@
-#include <os/availability.h>
-#include <os/trace_base.h>
-#include <os/object_private.h>
-#include <os/log.h>
 #include <xpc/xpc.h>
 #include "os_log_s.h"
 #include "libtrace_assert.h"

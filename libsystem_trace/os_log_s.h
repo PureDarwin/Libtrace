@@ -1,5 +1,11 @@
 #pragma once
 
+#include <os/availability.h>
+#include <os/trace_base.h>
+#include <os/object.h>
+#include <os/object_private.h>
+#include <os/log.h>
+
 struct os_log_s {
 	_OS_OBJECT_HEADER(const void *isa, ref_cnt, xref_cnt);
 	uint32_t magic;

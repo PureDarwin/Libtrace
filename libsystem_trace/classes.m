@@ -1,9 +1,4 @@
 #import <objc/objc.h>
-#import <os/availability.h>
-#import <os/trace_base.h>
-#import <os/object.h>
-#import <os/object_private.h>
-#import <os/log.h>
 #include "os_log_s.h"
 
 @interface OS_os_log : OS_object
