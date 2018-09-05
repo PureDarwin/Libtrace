@@ -1,0 +1,5 @@
+os: osx
+xcode: xcode9.4
+
+install:
+  - xcodebuild -project Libtrace.xcodeproj
