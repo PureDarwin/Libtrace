@@ -1,6 +1,7 @@
-language: objective-c
+language: c
 os: osx
 xcode: xcode9.4
 
-install:
+# this changes the default build-script of C
+script:
   - xcodebuild -project Libtrace.xcodeproj
