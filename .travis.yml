@@ -4,4 +4,4 @@ xcode: xcode9.4
 
 # this changes the default build-script of C
 script:
-  - xcodebuild -project Libtrace.xcodeproj
+  - xcodebuild -project Libtrace.xcodeproj CODE_SIGN_IDENTITY=""
