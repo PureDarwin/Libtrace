@@ -60,3 +60,15 @@ bool os_log_is_enabled(os_log_t log) {
 bool os_log_is_debug_enabled(os_log_t log) {
 	return os_log_debug_enabled(log);
 }
+
+#pragma mark Stub Functions
+
+extern char *__crashreporter_info__;
+asm(".desc __crashreporter_info__, 0x10");
+
+void
+_os_log_internal(void *dso, os_log_t log, os_log_type_t type, const char *message, ...)
+{
+	__crashreporter_info__ = "_os_log_internal: Function unimplemented";
+	__builtin_trap();
+}
