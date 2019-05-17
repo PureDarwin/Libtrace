@@ -292,7 +292,6 @@
 				);
 				PRODUCT_NAME = system_trace;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -368,7 +367,6 @@
 				);
 				PRODUCT_NAME = system_trace;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
