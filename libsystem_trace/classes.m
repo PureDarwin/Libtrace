@@ -11,12 +11,12 @@
 @implementation OS_os_log
 
 + (void)load {
-	_os_log_disabled.isa = (__bridge const void *)[self class];
-	_os_log_default.isa = (__bridge const void *)[self class];
+	_os_log_disabled.isa = (const void *)[self class];
+	_os_log_default.isa = (const void *)[self class];
 }
 
 - (void)_dispose {
-	struct os_log_s *value = (__bridge struct os_log_s *)self;
+	struct os_log_s *value = (struct os_log_s *)self;
 	if (value->subsystem != NULL) free((void *)value->subsystem);
 	if (value->category != NULL) free((void *)value->category);
 }
@@ -26,7 +26,7 @@
 #pragma mark -
 
 __XNU_PRIVATE_EXTERN const void *_os_log_class(void) {
-	return (__bridge const void *)[OS_os_log class];
+	return (const void *)[OS_os_log class];
 }
 
 struct os_log_s _os_log_disabled = {
