@@ -1,6 +1,10 @@
 #import <objc/objc.h>
 #include "os_log_s.h"
 
+#if _OS_OBJECT_OBJC_ARC
+#error This file cannot be compiled with ARC.
+#endif
+
 @interface OS_os_log : OS_object
 @end
 
