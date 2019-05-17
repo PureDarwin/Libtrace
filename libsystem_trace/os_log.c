@@ -28,18 +28,14 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	xpc_dictionary_set_string(message, "Category", log->category ?: "");
 	xpc_dictionary_set_int64(message, "LogType", type);
 
-	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-	__block bool enabled = false;
-
 	xpc_connection_t connection = xpc_connection_create("com.apple.log.events", NULL);
-	xpc_connection_send_message_with_reply(connection, message, dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0), ^(xpc_object_t  _Nonnull object) {
-		enabled = xpc_dictionary_get_bool(object, "IsEnabled");
-		dispatch_semaphore_signal(semaphore);
-	});
+	xpc_connection_resume(connection);
 
-	dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-	dispatch_release(semaphore);
+	xpc_object_t reply = xpc_connection_send_message_with_reply_sync(connection, message);
 	xpc_release(message);
+
+	bool enabled = xpc_dictionary_get_bool(reply, "IsEnabled");
+	xpc_release(reply);
 
 	log->enabled_values |= ((enabled == true) << type);
 	log->enabled_mask |= bit;
