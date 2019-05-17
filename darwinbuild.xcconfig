@@ -1,5 +1,0 @@
-DEPROOT = /Volumes/BuildRoot_PD18_2/InstalledRoots
-
-SYSTEM_HEADER_SEARCH_PATHS = $(DEPROOT)/System/Library/Frameworks/System.framework/PrivateHeaders $(DEPROOT)/usr/include $(DEPROOT)/usr/local/include
-FRAMEWORK_SEARCH_PATHS = $(DEPROOT)/System/Library/Frameworks $(DEPROOT)/System/Library/PrivateFrameworks
-LIBRARY_SEARCH_PATHS = $(DEPROOT)/usr/local/lib $(DEPROOT)/usr/lib
