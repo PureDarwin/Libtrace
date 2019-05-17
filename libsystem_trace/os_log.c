@@ -28,7 +28,7 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	xpc_dictionary_set_string(message, "Category", log->category ?: "");
 	xpc_dictionary_set_int64(message, "LogType", type);
 
-	xpc_connection_t connection = xpc_connection_create("com.apple.log.events", NULL);
+	xpc_connection_t connection = xpc_connection_create("com.apple.log", NULL);
 	xpc_connection_resume(connection);
 
 	xpc_object_t reply = xpc_connection_send_message_with_reply_sync(connection, message);
