@@ -6,6 +6,21 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		1F26B5282302285000071CCA /* world */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 1F26B5292302285000071CCA /* Build configuration list for PBXAggregateTarget "world" */;
+			buildPhases = (
+			);
+			dependencies = (
+				1F26B52D2302285800071CCA /* PBXTargetDependency */,
+				1F26B52F2302285800071CCA /* PBXTargetDependency */,
+			);
+			name = world;
+			productName = world;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		1F1611BB2138D91F00795E48 /* libtrace_assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611B92138D91F00795E48 /* libtrace_assert.h */; };
 		1F1611BC2138D91F00795E48 /* libtrace_assert.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F1611BA2138D91F00795E48 /* libtrace_assert.c */; };
@@ -13,6 +28,23 @@
 		1F8286B62138C52600AE215C /* os_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F8286B42138C52600AE215C /* os_log.c */; };
 		1F8286BC2138C81500AE215C /* classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8286BB2138C81500AE215C /* classes.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1F26B52C2302285800071CCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F37F7D52138C2A100321E25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F8286AC2138C2E600AE215C;
+			remoteInfo = libsystem_trace;
+		};
+		1F26B52E2302285800071CCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1F37F7D52138C2A100321E25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1F184082230224B3003FC28F;
+			remoteInfo = logd;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1F1611B92138D91F00795E48 /* libtrace_assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libtrace_assert.h; sourceTree = "<group>"; };
@@ -150,6 +182,9 @@
 					1F184082230224B3003FC28F = {
 						CreatedOnToolsVersion = 11.0;
 					};
+					1F26B5282302285000071CCA = {
+						CreatedOnToolsVersion = 11.0;
+					};
 					1F8286AC2138C2E600AE215C = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -168,6 +203,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				1F26B5282302285000071CCA /* world */,
 				1F8286AC2138C2E600AE215C /* libsystem_trace */,
 				1F184082230224B3003FC28F /* logd */,
 			);
@@ -194,6 +230,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1F26B52D2302285800071CCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F8286AC2138C2E600AE215C /* libsystem_trace */;
+			targetProxy = 1F26B52C2302285800071CCA /* PBXContainerItemProxy */;
+		};
+		1F26B52F2302285800071CCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1F184082230224B3003FC28F /* logd */;
+			targetProxy = 1F26B52E2302285800071CCA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1F184088230224B3003FC28F /* Debug */ = {
@@ -262,6 +311,24 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		1F26B52A2302285000071CCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3P242C9ES5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1F26B52B2302285000071CCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3P242C9ES5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -501,6 +568,15 @@
 			buildConfigurations = (
 				1F184088230224B3003FC28F /* Debug */,
 				1F184089230224B3003FC28F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F26B5292302285000071CCA /* Build configuration list for PBXAggregateTarget "world" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F26B52A2302285000071CCA /* Debug */,
+				1F26B52B2302285000071CCA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
