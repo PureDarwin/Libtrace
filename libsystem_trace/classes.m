@@ -34,8 +34,8 @@ struct os_log_s _os_log_disabled = {
 	.ref_cnt = 0xFFFFFFFF,
 	.xref_cnt = 0xFFFFFFFF,
 	.magic = OS_LOG_DEFAULT_MAGIC,
-	.subsystem = NULL,
-	.category = NULL
+	.subsystem = "",
+	.category = ""
 };
 
 struct os_log_s _os_log_default = {
@@ -43,6 +43,6 @@ struct os_log_s _os_log_default = {
 	.ref_cnt = 0xFFFFFFFF,
 	.xref_cnt = 0xFFFFFFFF,
 	.magic = OS_LOG_DEFAULT_MAGIC,
-	.subsystem = NULL,
-	.category = NULL
+	.subsystem = "",
+	.category = ""
 };
