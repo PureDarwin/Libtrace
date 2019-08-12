@@ -27,8 +27,8 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 
 	xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
 	xpc_dictionary_set_string(message, "MessageId", "IsTypeEnabled");
-	xpc_dictionary_set_string(message, "Subsystem", log->subsystem ?: "");
-	xpc_dictionary_set_string(message, "Category", log->category ?: "");
+	xpc_dictionary_set_string(message, "Subsystem", log->subsystem);
+	xpc_dictionary_set_string(message, "Category", log->category);
 	xpc_dictionary_set_int64(message, "LogType", type);
 
 	dispatch_queue_t targetq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -57,8 +57,8 @@ _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, ui
 	libtrace_precondition(type >= OS_LOG_TYPE_DEFAULT && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to os_log_type_enabled()");
 
 	xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
-	xpc_dictionary_set_string(message, "Subsystem", log->subsystem ?: "");
-	xpc_dictionary_set_string(message, "Category", log->category ?: "");
+	xpc_dictionary_set_string(message, "Subsystem", log->subsystem);
+	xpc_dictionary_set_string(message, "Category", log->category);
 	xpc_dictionary_set_int64(message, "LogType", type);
 	xpc_dictionary_set_string(message, "Format", format);
 	xpc_dictionary_set_data(message, "ArgumentBuffer", buf, size);
