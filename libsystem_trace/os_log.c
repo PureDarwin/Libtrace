@@ -35,6 +35,7 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 
 	xpc_object_t reply = xpc_connection_send_message_with_reply_sync(connection, message);
 	xpc_release(message);
+	xpc_release(connection);
 
 	bool enabled = xpc_dictionary_get_bool(reply, "IsEnabled");
 	xpc_release(reply);
