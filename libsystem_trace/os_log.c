@@ -3,6 +3,13 @@
 #include "libtrace_assert.h"
 
 extern const void *_os_log_class(void);
+extern struct os_log_s _os_log_default, _os_log_disabled;
+
+void _libtrace_init(void) {
+	_os_log_default.isa = _os_log_class();
+	_os_log_disabled.isa = _os_log_class();
+}
+
 os_log_t os_log_create(const char *subsystem, const char *category) {
 	libtrace_precondition(subsystem != NULL, "subsystem cannot be NULL");
 	libtrace_precondition(category != NULL, "category cannot be NULL");
