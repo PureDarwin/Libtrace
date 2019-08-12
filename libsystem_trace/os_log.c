@@ -4,6 +4,9 @@
 
 extern const void *_os_log_class(void);
 os_log_t os_log_create(const char *subsystem, const char *category) {
+	libtrace_precondition(subsystem != NULL, "subsystem cannot be NULL");
+	libtrace_precondition(category != NULL, "category cannot be NULL");
+
 	os_log_t value = (os_log_t)_os_object_alloc(_os_log_class(), sizeof(os_log_t));
 	value->magic = OS_LOG_MAGIC;
 	value->subsystem = strdup(subsystem);
