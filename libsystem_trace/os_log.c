@@ -43,6 +43,31 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	return enabled;
 }
 
+void
+_os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, uint8_t *buf, uint32_t size) {
+	libtrace_precondition(log != NULL, "os_log_t cannot be NULL");
+	if (log->magic == OS_LOG_DISABLED_MAGIC) return;
+	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to os_log_type_enabled()");
+	libtrace_precondition(type >= OS_LOG_TYPE_DEFAULT && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to os_log_type_enabled()");
+
+	xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
+	xpc_dictionary_set_string(message, "Subsystem", log->subsystem ?: "");
+	xpc_dictionary_set_string(message, "Category", log->category ?: "");
+	xpc_dictionary_set_int64(message, "LogType", type);
+	xpc_dictionary_set_string(message, "Format", format);
+	xpc_dictionary_set_data(message, "ArgumentBuffer", buf, size);
+
+	dispatch_queue_t targetq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	xpc_connection_t connection = xpc_connection_create_mach_service("com.apple.log.events", targetq, 0);
+	libtrace_assert(connection != NULL, "Could not create connection to com.apple.log.events Mach service");
+
+	xpc_connection_resume(connection);
+	(void)xpc_connection_send_message_with_reply_sync(connection, message);
+
+	xpc_release(message);
+	xpc_release(connection);
+}
+
 #pragma mark Legacy Functions
 
 os_log_t _os_log_create(void *dso __unused, const char *subsystem, const char *category) {
