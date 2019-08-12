@@ -5,10 +5,10 @@
 #error This file cannot be compiled with ARC.
 #endif
 
-@interface OS_os_log : OS_object
+@interface OS_OBJECT_CLASS(os_log) : OS_OBJECT_CLASS(object)
 @end
 
-@implementation OS_os_log
+@implementation OS_OBJECT_CLASS(os_log)
 
 + (void)load {
 	_os_log_disabled.isa = (const void *)[self class];
