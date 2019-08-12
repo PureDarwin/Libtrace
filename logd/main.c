@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <xpc/xpc.h>
+#include "logd_file_format.h"
 
 static void logd_handle_submission(xpc_object_t submission) {
 	// FIXME: Implement
