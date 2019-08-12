@@ -28,7 +28,9 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	xpc_dictionary_set_string(message, "Category", log->category ?: "");
 	xpc_dictionary_set_int64(message, "LogType", type);
 
-	xpc_connection_t connection = xpc_connection_create("com.apple.log", NULL);
+	dispatch_queue_t targetq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	xpc_connection_t connection = xpc_connection_create("com.apple.log", targetq);
+	libtrace_assert(connection != NULL, "Could not create connection to com.apple.log Mach service");
 	xpc_connection_resume(connection);
 
 	xpc_object_t reply = xpc_connection_send_message_with_reply_sync(connection, message);
