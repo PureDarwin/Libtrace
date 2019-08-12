@@ -1,15 +1,17 @@
 #include "libtrace_assert.h"
+#include <CrashReporterClient.h>
+#include <sys/reason.h>
 #include <stdio.h>
+#include <stdarg.h>
 
-char *__crashreporter_info__;
-asm(".desc __crashreporter_info__, 0x10");
+void _libtrace_assert_fail(const char *message, ...) {
+	char *msg;
+	va_list ap;
 
-void _libtrace_bug(const char *condition, const char *message, const char *file, int line) {
-	asprintf(&__crashreporter_info__, "BUG IN LIBTRACE: %s (at %s:%d)", message, file, line);
-	__builtin_trap();
-}
+	va_start(ap, message);
+	vasprintf(&msg, message, ap);
+	va_end(ap);
 
-void _libtrace_client_bug(const char *condition, const char *message, const char *file, int line) {
-	asprintf(&__crashreporter_info__, "BUG IN CLIENT OF LIBTRACE: %s (at %s:%d)", message, file, line);
-	__builtin_trap();
+	CRSetCrashLogMessage(msg);
+	abort_with_reason(OS_REASON_LIBSYSTEM, 1, msg, OS_REASON_FLAG_GENERATE_CRASH_REPORT);
 }

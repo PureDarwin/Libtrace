@@ -4,11 +4,15 @@
 #include <os/base.h>
 
 __XNU_PRIVATE_EXTERN OS_NOINLINE OS_NORETURN
-void _libtrace_bug(const char *condition, const char *message, const char *file, int line);
-#define libtrace_assert(cond, message) \
-	((cond) ? (void)0 : _libtrace_bug(#cond, message, __FILE__, __LINE__) )
+void _libtrace_assert_fail(const char *message, ...);
 
-__XNU_PRIVATE_EXTERN OS_NOINLINE OS_NORETURN
-void _libtrace_client_bug(const char *condition, const char *message, const char *file, int line);
-#define libtrace_precondition(cond, message) \
-	((cond) ? (void)0 : _libtrace_client_bug(#cond, message, __FILE__, __LINE__) )
+#define libtrace_assert(cond, message, ...) \
+	do { \
+		if (__builtin_expect(!(cond), 0)) \
+			_libtrace_assert_fail("BUG IN LIBTRACE: " message, ##__VA_ARGS__); \
+	} while (0)
+#define libtrace_precondition(cond, message, ...) \
+	do { \
+		if (__builtin_expect(!(cond), 0)) \
+			_libtrace_assert_fail("BUG IN CLIENT OF LIBTRACE: " message, ##__VA_ARGS__); \
+	} while (0)
