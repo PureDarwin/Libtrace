@@ -48,6 +48,10 @@ public:
 	bool null(void) const {
 		return this->get() != nullptr;
 	}
+
+	CFTypeID typeID(void) const {
+		return CFGetTypeID(this);
+	}
 };
 
 using CFString = CFHolder<CFStringRef>;
