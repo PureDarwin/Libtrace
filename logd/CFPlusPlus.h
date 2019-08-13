@@ -45,6 +45,8 @@ public:
 using CFString = CFHolder<CFStringRef>;
 using CFDictionary = CFHolder<CFDictionaryRef>;
 using CFArray = CFHolder<CFArrayRef>;
+using CFData = CFHolder<CFDataRef>;
+using CFError = CFHolder<CFErrorRef>;
 }
 
 using namespace CFPlusPlus;
