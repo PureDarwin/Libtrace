@@ -23,6 +23,14 @@ class CFHolder : std::unique_ptr<typename std::remove_pointer<CFType>::type, CFD
 public:
 	typedef typename std::remove_pointer<CFType>::type struct_type;
 
+	CFHolder() {
+		this->reset();
+	}
+
+	CFHolder(std::nullptr_t) {
+		this->reset();
+	}
+
 	CFHolder(CFType ref) {
 		std::unique_ptr<struct_type, CFDeleter<CFType>> other(ref);
 		this->swap(other);
