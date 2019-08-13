@@ -41,7 +41,7 @@ public:
 		return *this;
 	}
 
-	operator CFType() {
+	operator CFType() const {
 		return this->get();
 	}
 
