@@ -45,11 +45,6 @@ public:
 		return this->get();
 	}
 
-	CFType * operator &(void) {
-		this->reset();
-		return &this->get();
-	}
-
 	bool null(void) const {
 		return this->get() != nullptr;
 	}
