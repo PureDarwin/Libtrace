@@ -69,6 +69,7 @@ _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, ui
 	xpc_dictionary_set_int64(message, "LogType", type);
 	xpc_dictionary_set_string(message, "Format", format);
 	xpc_dictionary_set_data(message, "ArgumentBuffer", buf, size);
+	xpc_dictionary_set_date(message, "Timestamp", time(NULL));
 
 	dispatch_queue_t targetq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	xpc_connection_t connection = xpc_connection_create_mach_service("com.apple.log.events", targetq, 0);
