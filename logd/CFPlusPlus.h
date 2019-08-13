@@ -7,18 +7,32 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <memory>
+#include <type_traits>
 
 namespace CFPlusPlus {
+template<typename CFType>
 class CFDeleter {
 public:
-	void operator() (CFTypeRef *ref) {
-		CFRelease(*ref);
+	void operator() (CFType ref) {
+		CFRelease(ref);
 	}
 };
 
 template<typename CFType>
-class CFHolder : std::unique_ptr<CFType, CFDeleter> {
+class CFHolder : std::unique_ptr<typename std::remove_pointer<CFType>::type, CFDeleter<CFType>> {
 public:
+	typedef typename std::remove_pointer<CFType>::type struct_type;
+
+	CFHolder(CFType ref) {
+		std::unique_ptr<struct_type, CFDeleter<CFType>> other(ref);
+		this->swap(other);
+	}
+
+	CFHolder<CFType>& operator =(CFType ref) {
+		this->reset(&ref);
+		return *this;
+	}
+
 	operator CFType() {
 		return this->get();
 	}
