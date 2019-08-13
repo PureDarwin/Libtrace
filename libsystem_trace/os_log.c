@@ -76,7 +76,7 @@ _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, ui
 	libtrace_assert(connection != NULL, "Could not create connection to com.apple.log.events Mach service");
 
 	xpc_connection_resume(connection);
-	(void)xpc_connection_send_message_with_reply_sync(connection, message);
+	xpc_connection_send_message(connection, message);
 
 	xpc_release(message);
 	xpc_release(connection);
