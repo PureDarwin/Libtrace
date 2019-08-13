@@ -27,6 +27,7 @@ struct logd_file_header {
 
 struct logd_entry_header {
 	os_log_type_t log_type;
+	int64_t timestamp;
 };
 struct logd_entry_footer {
 	uint32_t pad0; // must be zeros
