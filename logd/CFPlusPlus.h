@@ -14,7 +14,7 @@ template<typename CFType>
 class CFDeleter {
 public:
 	void operator() (CFType ref) {
-		CFRelease(ref);
+		if (ref != nullptr) CFRelease(ref);
 	}
 };
 
