@@ -2,6 +2,7 @@
 #define _LOGD_CONFIGURATION_H_
 
 #include <map>
+#include <vector>
 #include <string>
 #include <optional>
 
@@ -40,6 +41,8 @@ namespace logd::configuration {
 		std::map<std::string, Category> Categories;
 		std::optional<Category> DefaultCategory { std::nullopt };
 	};
+
+	std::optional<Domain> ReadDomain(const char *plistPath);
 }
 
 #endif /* _LOGD_CONFIGURATION_H_ */
