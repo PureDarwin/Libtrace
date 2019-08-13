@@ -26,6 +26,7 @@
 		1F1611BC2138D91F00795E48 /* libtrace_assert.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F1611BA2138D91F00795E48 /* libtrace_assert.c */; };
 		1F184086230224B3003FC28F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F184085230224B3003FC28F /* main.c */; };
 		1F27AB9D23035A2F008CE3AB /* configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F27AB9B23035A2F008CE3AB /* configuration.cpp */; };
+		1F27ABA1230361C5008CE3AB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F27ABA0230361C5008CE3AB /* CoreFoundation.framework */; };
 		1F8286B62138C52600AE215C /* os_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F8286B42138C52600AE215C /* os_log.c */; };
 		1F8286BC2138C81500AE215C /* classes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8286BB2138C81500AE215C /* classes.m */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		1F27AB9B23035A2F008CE3AB /* configuration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = configuration.cpp; sourceTree = "<group>"; };
 		1F27AB9C23035A2F008CE3AB /* configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = configuration.h; sourceTree = "<group>"; };
 		1F27AB9E23035CDC008CE3AB /* CFPlusPlus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFPlusPlus.h; sourceTree = "<group>"; };
+		1F27ABA0230361C5008CE3AB /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		1F5C13C4228F6C2100738374 /* darwinbuild.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = darwinbuild.xcconfig; sourceTree = SOURCE_ROOT; };
 		1F8286AD2138C2E600AE215C /* libsystem_trace.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsystem_trace.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F8286B42138C52600AE215C /* os_log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = os_log.c; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F27ABA1230361C5008CE3AB /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,12 +96,21 @@
 			path = logd;
 			sourceTree = "<group>";
 		};
+		1F27AB9F230361C5008CE3AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1F27ABA0230361C5008CE3AB /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1F37F7D42138C2A100321E25 = {
 			isa = PBXGroup;
 			children = (
 				1F8286B22138C40700AE215C /* libsystem_trace */,
 				1F184084230224B3003FC28F /* logd */,
 				1F5C13C3228F6C1800738374 /* xcodescripts */,
+				1F27AB9F230361C5008CE3AB /* Frameworks */,
 				1F8286AE2138C2E600AE215C /* Products */,
 			);
 			sourceTree = "<group>";
