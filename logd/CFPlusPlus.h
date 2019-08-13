@@ -36,6 +36,10 @@ public:
 	operator CFType() {
 		return this->get();
 	}
+
+	bool null(void) const {
+		return this->get() != nullptr;
+	}
 };
 
 using CFString = CFHolder<CFStringRef>;
