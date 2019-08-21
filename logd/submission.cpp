@@ -21,6 +21,25 @@ public:
 
 using unique_malloc_ptr = std::unique_ptr<uint8_t, malloc_deleter<uint8_t *>>;
 
+template<typename T = xpc_object_t>
+class xpc_holder {
+private:
+	T value;
+
+public:
+	xpc_holder(T val) {
+		value = val;
+	}
+
+	~xpc_holder() {
+		xpc_release(value);
+	}
+
+	operator T() {
+		return value;
+	}
+};
+
 inline unique_malloc_ptr unique_calloc(size_t byteSize) {
 	return unique_malloc_ptr((uint8_t *) calloc(byteSize, 1));
 }
@@ -127,9 +146,9 @@ void logd_handle_submission(xpc_object_t submission) {
 	const char *subsystem = xpc_dictionary_get_string(submission, "Subsystem");
 	const char *category = xpc_dictionary_get_string(submission, "Category");
 	const char *format = xpc_dictionary_get_string(submission, "Format");
-	xpc_object_t argsObject = xpc_dictionary_get_value(submission, "ArgumentBuffer");
-	xpc_object_t levelObject = xpc_dictionary_get_value(submission, "LogLevel");
-	xpc_object_t timestampObject = xpc_dictionary_get_value(submission, "Timestamp");
+	xpc_holder argsObject = xpc_dictionary_get_value(submission, "ArgumentBuffer");
+	xpc_holder levelObject = xpc_dictionary_get_value(submission, "LogLevel");
+	xpc_holder timestampObject = xpc_dictionary_get_value(submission, "Timestamp");
 
 	if (subsystem == NULL || category == NULL || format == NULL || argsObject == NULL || levelObject == NULL || timestampObject == NULL) {
 		logd_append_log_entry(OS_LOG_TYPE_ERROR, "com.apple.logd", "ClientError",
