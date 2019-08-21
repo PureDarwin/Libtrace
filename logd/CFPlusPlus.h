@@ -21,8 +21,6 @@ public:
 template<typename CFType>
 class CFHolder : std::unique_ptr<typename std::remove_pointer<CFType>::type, CFDeleter<CFType>> {
 public:
-	typedef typename std::remove_pointer<CFType>::type struct_type;
-
 	CFHolder() {
 		this->reset();
 	}
@@ -32,6 +30,7 @@ public:
 	}
 
 	CFHolder(CFType ref) {
+		typedef typename std::remove_pointer<CFType>::type struct_type;
 		std::unique_ptr<struct_type, CFDeleter<CFType>> other(ref);
 		this->swap(other);
 	}
