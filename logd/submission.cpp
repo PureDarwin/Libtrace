@@ -38,6 +38,10 @@ public:
 	operator T() {
 		return value;
 	}
+
+	bool null() const {
+		return value == nullptr;
+	}
 };
 
 inline unique_malloc_ptr unique_calloc(size_t byteSize) {
@@ -150,7 +154,7 @@ void logd_handle_submission(xpc_object_t submission) {
 	xpc_holder levelObject = xpc_dictionary_get_value(submission, "LogLevel");
 	xpc_holder timestampObject = xpc_dictionary_get_value(submission, "Timestamp");
 
-	if (subsystem == NULL || category == NULL || format == NULL || argsObject == NULL || levelObject == NULL || timestampObject == NULL) {
+	if (subsystem == NULL || category == NULL || format == NULL || argsObject.null() || levelObject.null() || timestampObject.null()) {
 		logd_append_log_entry(OS_LOG_TYPE_ERROR, "com.apple.logd", "ClientError",
 							  "Subsystem, Category, Format, ArgumentBuffer, LogLevel, and Timestamp are all required submission keys",
 							  time(NULL), nullptr, 0);
