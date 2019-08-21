@@ -95,9 +95,13 @@ void logd_append_log_entry(os_log_type_t type, const char *subsystem, const char
 		ptr += sizeof(struct logd_entry_header);
 	}
 
-	stpcpy((char *)ptr, subsystem); ptr++;
-	stpcpy((char *)ptr, category); ptr++;
-	stpcpy((char *)ptr, format); ptr++;
+	{
+		char *strPtr = (char *)ptr;
+		strPtr = stpcpy((char *)ptr, subsystem) + 1;
+		strPtr = stpcpy((char *)ptr, category) + 1;
+		strPtr = stpcpy((char *)ptr, format) + 1;
+		ptr = (uint8_t *)strPtr;
+	}
 
 	*(uint32_t *)ptr = argsSize; ptr += sizeof(uint32_t);
 	if (argsSize > 0) {
