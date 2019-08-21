@@ -2,9 +2,7 @@
 #include <xpc/xpc.h>
 #include "logd_file_format.h"
 
-static void logd_handle_submission(xpc_object_t submission) {
-	// FIXME: Implement
-}
+extern void logd_handle_submission(xpc_object_t submission);
 
 static void logd_handle_general(xpc_object_t message, xpc_object_t reply) {
 	// FIXME: Implement

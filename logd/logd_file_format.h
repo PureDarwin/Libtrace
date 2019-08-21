@@ -16,6 +16,8 @@
 // uint32_t buffer_length;
 // uint8_t buffer[buffer_length];
 // struct logd_entry_footer footer;
+//
+// Note that if buffer_length == 0, then the buffer field is skipped entirely.
 
 struct logd_file_header {
 	uint16_t magic;

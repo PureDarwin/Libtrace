@@ -25,6 +25,7 @@
 		1F1611BB2138D91F00795E48 /* libtrace_assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611B92138D91F00795E48 /* libtrace_assert.h */; };
 		1F1611BC2138D91F00795E48 /* libtrace_assert.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F1611BA2138D91F00795E48 /* libtrace_assert.c */; };
 		1F184086230224B3003FC28F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F184085230224B3003FC28F /* main.c */; };
+		1F221FB3230E01AC00CCA95A /* submission.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F221FB2230E01AC00CCA95A /* submission.cpp */; };
 		1F27AB9D23035A2F008CE3AB /* configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1F27AB9B23035A2F008CE3AB /* configuration.cpp */; };
 		1F27ABA1230361C5008CE3AB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F27ABA0230361C5008CE3AB /* CoreFoundation.framework */; };
 		1F46E842230DFAE600EAFBA5 /* stubs.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F46E841230DFAE600EAFBA5 /* stubs.c */; };
@@ -54,6 +55,7 @@
 		1F1611BA2138D91F00795E48 /* libtrace_assert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = libtrace_assert.c; sourceTree = "<group>"; };
 		1F184083230224B3003FC28F /* logd */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = logd; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F184085230224B3003FC28F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		1F221FB2230E01AC00CCA95A /* submission.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = submission.cpp; sourceTree = "<group>"; };
 		1F26B530230228E400071CCA /* logd_file_format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logd_file_format.h; sourceTree = "<group>"; };
 		1F27AB9B23035A2F008CE3AB /* configuration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = configuration.cpp; sourceTree = "<group>"; };
 		1F27AB9C23035A2F008CE3AB /* configuration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = configuration.h; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			children = (
 				1F184085230224B3003FC28F /* main.c */,
 				1F26B530230228E400071CCA /* logd_file_format.h */,
+				1F221FB2230E01AC00CCA95A /* submission.cpp */,
 				1F27AB9B23035A2F008CE3AB /* configuration.cpp */,
 				1F27AB9C23035A2F008CE3AB /* configuration.h */,
 				1F27AB9E23035CDC008CE3AB /* CFPlusPlus.h */,
@@ -241,6 +244,7 @@
 			files = (
 				1F27AB9D23035A2F008CE3AB /* configuration.cpp in Sources */,
 				1F184086230224B3003FC28F /* main.c in Sources */,
+				1F221FB3230E01AC00CCA95A /* submission.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +307,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-lCrashReporterClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -335,6 +340,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-lCrashReporterClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
