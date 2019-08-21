@@ -89,7 +89,7 @@ int current_log_fd = -1;
 extern "C"
 void logd_open_current_log(void) {
 	mkdir_p("/var/db/logd_storage");
-	current_log_fd = open("/var/db/logd_storage/current_log", O_CREAT | O_TRUNC | O_WRONLY | O_APPEND, 0644);
+	current_log_fd = open("/var/db/logd_storage/current_log", O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (current_log_fd == -1) {
 		_setcrashlogmessage("open(\"/var/db/logd_storage/current_log\") failed (%s); logd cannot continue execution", strerror(errno));
 		__builtin_trap();
