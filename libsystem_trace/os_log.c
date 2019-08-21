@@ -95,11 +95,3 @@ bool os_log_is_enabled(os_log_t log) {
 bool os_log_is_debug_enabled(os_log_t log) {
 	return os_log_type_enabled(log, OS_LOG_TYPE_DEBUG);
 }
-
-#pragma mark Stub Functions
-
-void
-_os_log_internal(void *dso, os_log_t log, os_log_type_t type, const char *message, ...)
-{
-	_libtrace_assert_fail("_os_log_internal: Function unimplemented");
-}
