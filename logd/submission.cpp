@@ -25,10 +25,6 @@ inline unique_malloc_ptr unique_calloc(size_t byteSize) {
 	return unique_malloc_ptr((uint8_t *) calloc(byteSize, 1));
 }
 
-inline unique_malloc_ptr unique_calloc(size_t count, size_t elemSize) {
-	return unique_malloc_ptr((uint8_t *) calloc(count, elemSize));
-}
-
 void __attribute__((__format__(__printf__,1,2)))
 _setcrashlogmessage(const char *fmt, ...)
 {
