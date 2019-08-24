@@ -199,11 +199,11 @@ std::map<std::string, Domain> Domain::GetDomainsForUser(uid_t uid, bool rescan) 
 		if (getpwuid_r(uid, &pwd, pwd_buffer, pwd_bufsize, &pwd_result) == 0 && pwd_result != nullptr) {
 			char *path;
 
-			asprintf(&path, "%s/Library/Preferences/Subsystems", pwd.pw_dir);
+			asprintf(&path, "%s/Library/Preferences/Logging/Subsystems", pwd.pw_dir);
 			ParseDomainsInDirectory(path, domains);
 			free(path);
 
-			asprintf(&path, "%s/Library/Preferences/Processes", pwd.pw_dir);
+			asprintf(&path, "%s/Library/Preferences/Logging/Processes", pwd.pw_dir);
 			ParseDomainsInDirectory(path, domains);
 			free(path);
 		} else {
