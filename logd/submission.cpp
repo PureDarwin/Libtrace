@@ -8,6 +8,7 @@
 #include <type_traits>
 
 #include "logd_file_format.h"
+#include "logd_common.h"
 
 namespace /* anonymous */ {
 
@@ -46,21 +47,6 @@ public:
 
 inline unique_malloc_ptr unique_calloc(size_t byteSize) {
 	return unique_malloc_ptr((uint8_t *) calloc(byteSize, 1));
-}
-
-void __attribute__((__format__(__printf__,1,2)))
-_setcrashlogmessage(const char *fmt, ...)
-{
-	char *mess = NULL;
-	int res;
-	va_list ap;
-
-	va_start(ap, fmt);
-	res = vasprintf(&mess, fmt, ap);
-	va_end(ap);
-	if (res < 0)
-		mess = (char *)fmt; /* the format string is better than nothing */
-	CRSetCrashLogMessage(mess);
 }
 
 void mkdir_p(const char *wholePath) {
@@ -180,4 +166,19 @@ void logd_handle_submission(xpc_object_t submission) {
 	argsSize = (uint32_t)xpc_data_get_bytes(argsObject, args.get(), 0, argsSize);
 
 	logd_append_log_entry((os_log_type_t) xpc_int64_get_value(levelObject), subsystem, category, format, xpc_int64_get_value(timestampObject), args.get(), argsSize);
+}
+
+extern "C" void __attribute__((__format__(__printf__,1,2)))
+_setcrashlogmessage(const char *fmt, ...)
+{
+	char *mess = NULL;
+	int res;
+	va_list ap;
+
+	va_start(ap, fmt);
+	res = vasprintf(&mess, fmt, ap);
+	va_end(ap);
+	if (res < 0)
+		mess = (char *)fmt; /* the format string is better than nothing */
+	CRSetCrashLogMessage(mess);
 }
