@@ -120,9 +120,9 @@ void logd_append_log_entry(os_log_type_t type, const char *subsystem, const char
 
 	{
 		char *strPtr = (char *)ptr;
-		strPtr = stpcpy((char *)ptr, subsystem) + 1;
-		strPtr = stpcpy((char *)ptr, category) + 1;
-		strPtr = stpcpy((char *)ptr, format) + 1;
+		strPtr = stpcpy(strPtr, subsystem) + 1;
+		strPtr = stpcpy(strPtr, category) + 1;
+		strPtr = stpcpy(strPtr, format) + 1;
 		ptr = (uint8_t *)strPtr;
 	}
 
