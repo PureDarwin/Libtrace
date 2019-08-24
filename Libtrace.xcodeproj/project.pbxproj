@@ -67,6 +67,7 @@
 		1F8286B42138C52600AE215C /* os_log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = os_log.c; sourceTree = "<group>"; };
 		1F8286BB2138C81500AE215C /* classes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = classes.m; sourceTree = "<group>"; };
 		1F8286BD2138C95800AE215C /* os_log_s.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_log_s.h; sourceTree = "<group>"; };
+		1FA88D142311B58A001169AD /* logd_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logd_common.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +98,7 @@
 				1F27AB9B23035A2F008CE3AB /* configuration.cpp */,
 				1F27AB9C23035A2F008CE3AB /* configuration.h */,
 				1F27AB9E23035CDC008CE3AB /* CFPlusPlus.h */,
+				1FA88D142311B58A001169AD /* logd_common.h */,
 			);
 			path = logd;
 			sourceTree = "<group>";
