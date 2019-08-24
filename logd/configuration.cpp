@@ -1,5 +1,9 @@
 #include "configuration.h"
 #include "CFPlusPlus.h"
+#include "logd_common.h"
+#include <dirent.h>
+#include <unistd.h>
+#include <pwd.h>
 
 using namespace logd::configuration;
 
@@ -118,4 +122,99 @@ std::optional<Domain> Domain::ReadDomain(const char *plistPath) {
 	}
 
 	return domain;
+}
+
+namespace /* anonymous */
+{
+
+void ParseDomainsInDirectory(const char *directory, std::map<std::string, Domain> &domains) {
+	DIR *dirp = opendir(directory);
+	if (dirp != nullptr) {
+		struct dirent *entry;
+		while ((entry = readdir(dirp)) != nullptr) {
+			if (entry->d_type == DT_REG) {
+				char *plistPath;
+				asprintf(&plistPath, "%s/%s", directory, entry->d_name);
+				std::optional<Domain> domain = Domain::ReadDomain(plistPath);
+				free(plistPath);
+
+				if (domain) {
+					char *identifier = strdup(entry->d_name);
+					identifier[strlen(identifier) - strlen(".plist")] = '\0';
+					domains[identifier] = domain.value();
+				} else {
+					char *message;
+					asprintf(&message, "Ignoring \"%s/%s\": Syntax or semantic error found while loading plist", directory, entry->d_name);
+					logd_append_log_entry(OS_LOG_TYPE_ERROR, "com.apple.logd", "DomainLoading", message, time(NULL), nullptr, 0);
+					free(message);
+				}
+			} else {
+				char *message;
+				asprintf(&message, "Ignoring \"%s/%s\": Not a regular file", directory, entry->d_name);
+				logd_append_log_entry(OS_LOG_TYPE_ERROR, "com.apple.logd", "DomainLoading", message, time(NULL), nullptr, 0);
+				free(message);
+			}
+		}
+	} else {
+		char *message;
+		asprintf(&message, "Could not open \"/System/Library/Preferences/Logging/Subsystems\": %s", strerror(errno));
+		logd_append_log_entry(OS_LOG_TYPE_ERROR, "com.apple.logd", "DomainLoading", message, time(NULL), nullptr, 0);
+		free(message);
+	}
+}
+
+}
+
+std::map<std::string, Domain> Domain::GetAllUserDomains(bool rescan) {
+	static std::map<std::string, Domain> domains;
+
+	if (rescan) domains.clear();
+	if (domains.size() == 0) {
+		domains.clear();
+
+		ParseDomainsInDirectory("/System/Library/Preferences/Logging/Subsystems", domains);
+		ParseDomainsInDirectory("/System/Library/Preferences/Logging/Processes", domains);
+		ParseDomainsInDirectory("/Library/Preferences/Logging/Subsystems", domains);
+		ParseDomainsInDirectory("/Library/Preferences/Logging/Processes", domains);
+	}
+
+	return domains;
+}
+
+std::map<std::string, Domain> Domain::GetDomainsForUser(uid_t uid, bool rescan) {
+	static std::map<uid_t, std::map<std::string, Domain>> userMap;
+
+	if (rescan) userMap.erase(uid);
+	if (userMap.find(uid) == userMap.end()) {
+		std::map<std::string, Domain> domains;
+
+		long pwd_bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+		if (pwd_bufsize == -1) {
+			_setcrashlogmessage("sysconf(_SC_GETPW_R_SIZE_MAX) failed: %s", strerror(errno));
+			__builtin_trap();
+		}
+
+		char pwd_buffer[pwd_bufsize];
+		struct passwd pwd, *pwd_result;
+		if (getpwuid_r(uid, &pwd, pwd_buffer, pwd_bufsize, &pwd_result) == 0 && pwd_result != nullptr) {
+			char *path;
+
+			asprintf(&path, "%s/Library/Preferences/Subsystems", pwd.pw_dir);
+			ParseDomainsInDirectory(path, domains);
+			free(path);
+
+			asprintf(&path, "%s/Library/Preferences/Processes", pwd.pw_dir);
+			ParseDomainsInDirectory(path, domains);
+			free(path);
+		} else {
+			char *message;
+			asprintf(&message, "getpwuid_r(%d) failed: %s", uid, strerror(errno));
+			logd_append_log_entry(OS_LOG_TYPE_ERROR, "com.apple.logd", "DomainLoading", message, time(NULL), nullptr, 0);
+			free(message);
+		}
+
+		userMap[uid] = domains;
+	}
+
+	return userMap[uid];
 }

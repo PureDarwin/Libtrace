@@ -41,6 +41,8 @@ namespace logd::configuration {
 		std::map<std::string, Category> Categories;
 		Category DefaultCategory;
 
+		static std::map<std::string, Domain> GetAllUserDomains(bool rescan);
+		static std::map<std::string, Domain> GetDomainsForUser(uid_t uid, bool rescan);
 		static std::optional<Domain> ReadDomain(const char *plistPath);
 	};
 }
