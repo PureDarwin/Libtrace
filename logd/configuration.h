@@ -39,7 +39,7 @@ namespace logd::configuration {
 	class Domain {
 	public:
 		std::map<std::string, Category> Categories;
-		std::optional<Category> DefaultCategory { std::nullopt };
+		Category DefaultCategory;
 	};
 
 	std::optional<Domain> ReadDomain(const char *plistPath);
