@@ -94,6 +94,19 @@ void logd_open_current_log(void) {
 		_setcrashlogmessage("open(\"/var/db/logd_storage/current_log\") failed (%s); logd cannot continue execution", strerror(errno));
 		__builtin_trap();
 	}
+
+	struct stat sbuf;
+	if (fstat(current_log_fd, &sbuf) == -1) {
+		_setcrashlogmessage("logd fatal error: Could not stat(\"/var/db/logd_storage_current_log\"): %s", strerror(errno));
+	}
+
+	if (sbuf.st_size == 0) {
+		struct logd_file_header file_header;
+		file_header.magic = LOGD_FILE_HEADER_MAGIC;
+		file_header.version = LOGD_FILE_HEADER_VERSION;
+		file_header.pad0 = 0;
+		write(current_log_fd, &file_header, sizeof(file_header));
+	}
 }
 
 extern "C"
