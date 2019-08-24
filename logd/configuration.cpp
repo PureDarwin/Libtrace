@@ -157,7 +157,7 @@ void ParseDomainsInDirectory(const char *directory, std::map<std::string, Domain
 		}
 	} else {
 		char *message;
-		asprintf(&message, "Could not open \"/System/Library/Preferences/Logging/Subsystems\": %s", strerror(errno));
+		asprintf(&message, "Could not open \"%s\": %s", directory, strerror(errno));
 		logd_append_log_entry(OS_LOG_TYPE_ERROR, "com.apple.logd", "DomainLoading", message, time(NULL), nullptr, 0);
 		free(message);
 	}
