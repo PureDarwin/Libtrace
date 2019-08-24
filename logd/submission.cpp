@@ -98,6 +98,7 @@ void logd_open_current_log(void) {
 	struct stat sbuf;
 	if (fstat(current_log_fd, &sbuf) == -1) {
 		_setcrashlogmessage("logd fatal error: stat(\"/var/db/logd_storage/current_log\") failed: %s", strerror(errno));
+		__builtin_trap();
 	}
 
 	if (sbuf.st_size == 0) {
