@@ -80,7 +80,7 @@ std::optional<Category> ParseCategory(const CFDictionary& plistValue) {
 
 } // anonymous namespace
 
-std::optional<Domain> ReadDomain(const char *plistPath) {
+std::optional<Domain> Domain::ReadDomain(const char *plistPath) {
 	CFString cfPath = CFStringCreateWithCString(nullptr, plistPath, kCFStringEncodingUTF8);
 	if (cfPath.null()) return std::nullopt;
 

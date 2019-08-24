@@ -40,9 +40,9 @@ namespace logd::configuration {
 	public:
 		std::map<std::string, Category> Categories;
 		Category DefaultCategory;
-	};
 
-	std::optional<Domain> ReadDomain(const char *plistPath);
+		static std::optional<Domain> ReadDomain(const char *plistPath);
+	};
 }
 
 #endif /* _LOGD_CONFIGURATION_H_ */
