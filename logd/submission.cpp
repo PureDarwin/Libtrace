@@ -32,7 +32,7 @@ public:
 	}
 
 	~xpc_holder() {
-		xpc_release(value);
+		if (value != nullptr) xpc_release(value);
 	}
 
 	operator T() {
