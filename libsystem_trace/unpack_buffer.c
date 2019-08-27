@@ -15,10 +15,10 @@ static bool contains_attribute(char *allAttributes, char *desired) {
 		// in case the desired attribute is located at the very start of allAttributes.
 		char *comma = needle - 1;
 		if (*comma == ',') return true;
-	} else {
-		char *end = needle + strlen(needle);
-		if (*end == ',') return true;
 	}
+
+	char *end = needle + strlen(desired);
+	if (*end == '\0' || *end == ',') return true;
 
 	return false;
 }
