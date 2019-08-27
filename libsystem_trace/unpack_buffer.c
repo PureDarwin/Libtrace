@@ -42,9 +42,8 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 	struct sbuf *sbuf = sbuf_new_auto();
 	size_t formatIndex = 0;
 
-	bool inPercent = false;
 	while (formatString[formatIndex] != '\0') {
-		if (!inPercent && formatString[formatIndex] != '%') {
+		if (formatString[formatIndex] != '%') {
 			sbuf_putc(sbuf, formatString[formatIndex]);
 			formatIndex++;
 			continue;
