@@ -2,15 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdarg.h>
-
-struct sbuf {
-	char	*s_buf;		/* storage buffer */
-	void	*s_unused;	/* binary compatibility, unused */
-	int		 s_size;	/* size of storage buffer */
-	int		 s_len;		/* current length of string */
-	int		 s_flags;	/* flags, unused */
-};
+#include "libsbuf.h"
 
 struct sbuf *sbuf_new_auto(void) {
 	struct sbuf *sb = calloc(1, sizeof(*sb));
