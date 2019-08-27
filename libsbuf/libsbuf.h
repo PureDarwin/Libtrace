@@ -56,7 +56,7 @@ __BEGIN_DECLS
 /*
  * API functions
  */
-struct sbuf	*sbuf_new(struct sbuf *, char *, int, int);
+struct sbuf	*sbuf_new_auto(void);
 void		 sbuf_clear(struct sbuf *);
 int		 sbuf_setpos(struct sbuf *, int);
 int		 sbuf_bcat(struct sbuf *, const void *, size_t);
