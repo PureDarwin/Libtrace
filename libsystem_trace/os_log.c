@@ -1,6 +1,9 @@
 #include <xpc/xpc.h>
 #include "os_log_s.h"
 #include "libtrace_assert.h"
+#include <asl.h>
+
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 extern const void *_os_log_class(void);
 extern struct os_log_s _os_log_default, _os_log_disabled;
@@ -25,61 +28,46 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	if (log == NULL) return false;
 	if (log->magic == OS_LOG_DISABLED_MAGIC) return false;
 
-	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to os_log_type_enabled()");
-	libtrace_precondition(type >= OS_LOG_TYPE_DEFAULT && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to os_log_type_enabled()");
-
-	int bit = 1 << type;
-	if ((log->enabled_mask & bit) == bit)
-		return (log->enabled_values & bit) != 0;
-
-	xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
-	xpc_dictionary_set_string(message, "MessageId", "IsTypeEnabled");
-	xpc_dictionary_set_string(message, "Subsystem", log->subsystem);
-	xpc_dictionary_set_string(message, "Category", log->category);
-	xpc_dictionary_set_int64(message, "LogType", type);
-
-	dispatch_queue_t targetq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	xpc_connection_t connection = xpc_connection_create("com.apple.log", targetq);
-	libtrace_assert(connection != NULL, "Could not create connection to com.apple.log Mach service");
-	xpc_connection_resume(connection);
-
-	xpc_object_t reply = xpc_connection_send_message_with_reply_sync(connection, message);
-	xpc_release(message);
-	xpc_release(connection);
-
-	bool enabled = xpc_dictionary_get_bool(reply, "IsEnabled");
-	xpc_release(reply);
-
-	log->enabled_values |= ((enabled == true) << type);
-	log->enabled_mask |= bit;
-
-	return enabled;
+	return true;
 }
 
 void
 _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, uint8_t *buf, uint32_t size) {
 	libtrace_precondition(log != NULL, "os_log_t cannot be NULL");
 	if (log->magic == OS_LOG_DISABLED_MAGIC) return;
-	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to os_log_type_enabled()");
-	libtrace_precondition(type >= OS_LOG_TYPE_DEFAULT && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to os_log_type_enabled()");
+	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to _os_log_impl()");
+	libtrace_precondition(type >= OS_LOG_TYPE_DEFAULT && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to _os_log_impl()");
 
-	xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
-	xpc_dictionary_set_string(message, "Subsystem", log->subsystem);
-	xpc_dictionary_set_string(message, "Category", log->category);
-	xpc_dictionary_set_int64(message, "LogType", type);
-	xpc_dictionary_set_string(message, "Format", format);
-	xpc_dictionary_set_data(message, "ArgumentBuffer", buf, size);
-	xpc_dictionary_set_date(message, "Timestamp", time(NULL));
+	aslmsg message = asl_new(ASL_TYPE_MSG);
+	asl_set(message, "os_log(3)", "TRUE");
+	asl_set(message, ASL_KEY_MSG, format);
+	asl_set(message, "Subsystem", log->subsystem);
+	asl_set(message, "Category", log->category);
 
-	dispatch_queue_t targetq = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	xpc_connection_t connection = xpc_connection_create_mach_service("com.apple.log.events", targetq, 0);
-	libtrace_assert(connection != NULL, "Could not create connection to com.apple.log.events Mach service");
+	switch (type) {
+		case OS_LOG_TYPE_DEBUG:
+			asl_set(message, ASL_KEY_LEVEL, ASL_STRING_DEBUG);
+			break;
 
-	xpc_connection_resume(connection);
-	xpc_connection_send_message(connection, message);
+		case OS_LOG_TYPE_INFO:
+		case OS_LOG_TYPE_DEFAULT:
+			asl_set(message, ASL_KEY_LEVEL, ASL_STRING_INFO);
+			break;
 
-	xpc_release(message);
-	xpc_release(connection);
+		case OS_LOG_TYPE_ERROR:
+			asl_set(message, ASL_KEY_LEVEL, ASL_STRING_ERR);
+			break;
+
+		case OS_LOG_TYPE_FAULT:
+			asl_set(message, ASL_KEY_LEVEL, ASL_STRING_ALERT);
+			break;
+
+		default:
+			libtrace_assert(false, "Invalid os_log_type_t not caught by precondition");
+	}
+
+	asl_send(NULL, message);
+	asl_release(message);
 }
 
 #pragma mark Legacy Functions
