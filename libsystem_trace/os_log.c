@@ -31,6 +31,9 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 	return true;
 }
 
+__XNU_PRIVATE_EXTERN
+char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t bufferSize);
+
 void
 _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, uint8_t *buf, uint32_t size) {
 	libtrace_precondition(log != NULL, "os_log_t cannot be NULL");
@@ -38,11 +41,15 @@ _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, ui
 	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to _os_log_impl()");
 	libtrace_precondition(type >= OS_LOG_TYPE_DEFAULT && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to _os_log_impl()");
 
+	char *decodedMessage = os_log_decode_buffer(format, buf, size);
+
 	aslmsg message = asl_new(ASL_TYPE_MSG);
 	asl_set(message, "os_log(3)", "TRUE");
-	asl_set(message, ASL_KEY_MSG, format);
+	asl_set(message, ASL_KEY_MSG, decodedMessage);
 	asl_set(message, "Subsystem", log->subsystem);
 	asl_set(message, "Category", log->category);
+
+	free(decodedMessage);
 
 	switch (type) {
 		case OS_LOG_TYPE_DEBUG:
