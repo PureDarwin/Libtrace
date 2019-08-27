@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1F08B3B52315F52200869729 /* org.puredarwin.os_log.asl in Install ASL Configuration File */ = {isa = PBXBuildFile; fileRef = 1F08B3B32315F50E00869729 /* org.puredarwin.os_log.asl */; };
 		1F1611BB2138D91F00795E48 /* libtrace_assert.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F1611B92138D91F00795E48 /* libtrace_assert.h */; };
 		1F1611BC2138D91F00795E48 /* libtrace_assert.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F1611BA2138D91F00795E48 /* libtrace_assert.c */; };
 		1F25F89B2315EB2E00A5D9DE /* unpack_buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 1F25F89A2315EB2E00A5D9DE /* unpack_buffer.c */; };
@@ -49,7 +50,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1F08B3B42315F51600869729 /* Install ASL Configuration File */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /etc/asl;
+			dstSubfolderSpec = 0;
+			files = (
+				1F08B3B52315F52200869729 /* org.puredarwin.os_log.asl in Install ASL Configuration File */,
+			);
+			name = "Install ASL Configuration File";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1F08B3B32315F50E00869729 /* org.puredarwin.os_log.asl */ = {isa = PBXFileReference; lastKnownFileType = text; path = org.puredarwin.os_log.asl; sourceTree = "<group>"; };
 		1F1611B92138D91F00795E48 /* libtrace_assert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libtrace_assert.h; sourceTree = "<group>"; };
 		1F1611BA2138D91F00795E48 /* libtrace_assert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = libtrace_assert.c; sourceTree = "<group>"; };
 		1F25F89A2315EB2E00A5D9DE /* unpack_buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unpack_buffer.c; sourceTree = "<group>"; };
@@ -130,6 +146,7 @@
 				1F1611B92138D91F00795E48 /* libtrace_assert.h */,
 				1F1611BA2138D91F00795E48 /* libtrace_assert.c */,
 				1F46E841230DFAE600EAFBA5 /* stubs.c */,
+				1F08B3B32315F50E00869729 /* org.puredarwin.os_log.asl */,
 			);
 			path = libsystem_trace;
 			sourceTree = "<group>";
@@ -172,6 +189,7 @@
 				1F8286A92138C2E600AE215C /* Sources */,
 				1F8286AA2138C2E600AE215C /* Frameworks */,
 				1F8286AB2138C2E600AE215C /* Headers */,
+				1F08B3B42315F51600869729 /* Install ASL Configuration File */,
 			);
 			buildRules = (
 			);
