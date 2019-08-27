@@ -145,6 +145,34 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				bufferIndex += length;
 				asprintf(&formattedArgument, "%llu", integer);
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
+			} else if (formatString[formatIndex] == 'x') {
+				uint8_t length = buffer[bufferIndex];
+				bufferIndex++;
+
+				uint64_t integer;
+				if (length == 1) integer = *(uint8_t *)buffer;
+				else if (length == 2) integer = *(uint16_t *)buffer;
+				else if (length == 4) integer = *(uint32_t *)buffer;
+				else if (length == 8) integer = *(uint64_t *)buffer;
+				else libtrace_assert(false, "Unexpected integer size %d", length);
+
+				bufferIndex += length;
+				asprintf(&formattedArgument, "0x%llx", integer);
+				if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
+			} else if (formatString[formatIndex] == 'X') {
+					uint8_t length = buffer[bufferIndex];
+					bufferIndex++;
+
+					uint64_t integer;
+					if (length == 1) integer = *(uint8_t *)buffer;
+					else if (length == 2) integer = *(uint16_t *)buffer;
+					else if (length == 4) integer = *(uint32_t *)buffer;
+					else if (length == 8) integer = *(uint64_t *)buffer;
+					else libtrace_assert(false, "Unexpected integer size %d", length);
+
+					bufferIndex += length;
+					asprintf(&formattedArgument, "0x%llX", integer);
+					if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
 			} else {
 				libtrace_assert(false, "Unknown format argument %%%c in os_log() call", formatString[formatIndex]);
 			}
