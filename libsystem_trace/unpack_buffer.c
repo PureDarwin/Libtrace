@@ -81,6 +81,7 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				bufferIndex++;
 				formattedArgument = calloc(length + 1, sizeof(char));
 				memcpy(formattedArgument, buffer + bufferIndex, length);
+				bufferIndex += length * sizeof(char);
 
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_private;
 			} else if (formatString[formatIndex] == 'S') {
@@ -89,6 +90,7 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 
 				wchar_t *wideArgument = calloc(length + 1, sizeof(wchar_t));
 				memcpy(wideArgument, buffer + bufferIndex, length * sizeof(wchar_t));
+				bufferIndex += length * sizeof(wchar_t);
 
 				formattedArgument = calloc(length + 1, sizeof(char));
 				wcstombs(formattedArgument, wideArgument, length);
@@ -99,14 +101,17 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				uint8_t length = buffer[bufferIndex];
 				bufferIndex++;
 
-				formattedArgument = calloc(length * 2 + 3, sizeof(char));
-				formattedArgument[0] = '0';
-				formattedArgument[1] = 'x';
+				struct sbuf *dataHex = sbuf_new_auto();
+				sbuf_putc(dataHex, '<');
 
 				for (uint8_t i = 0; i < length; i++) {
-					sprintf(formattedArgument + i * 2 + 2, "%02X", buffer[bufferIndex]);
+					sbuf_printf(dataHex, "%02X", buffer[bufferIndex]);
 					bufferIndex++;
 				}
+
+				sbuf_putc(dataHex, '>');
+				formattedArgument = strdup(sbuf_data(dataHex));
+				sbuf_delete(dataHex);
 
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_private;
 			} else if (formatString[formatIndex] == '@') {
