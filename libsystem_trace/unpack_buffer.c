@@ -14,7 +14,7 @@ static bool contains_attribute(char *allAttributes, char *desired) {
 		// The "if" check on the above line is to avoid underflowing the buffer,
 		// in case the desired attribute is located at the very start of allAttributes.
 		char *comma = needle - 1;
-		if (*comma == ',') return true;
+		if (*comma != ',') return false;
 	}
 
 	char *end = needle + strlen(desired);
