@@ -41,40 +41,38 @@ _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, ui
 	libtrace_precondition(log->magic == OS_LOG_DEFAULT_MAGIC || log->magic == OS_LOG_MAGIC, "Invalid os_log_t pointer parameter passed to _os_log_impl()");
 	libtrace_precondition(type >= OS_LOG_TYPE_DEFAULT && type <= OS_LOG_TYPE_FAULT, "Invalid os_log_type_t parameter passed to _os_log_impl()");
 
-	char *decodedMessage = os_log_decode_buffer(format, buf, size);
-
 	aslmsg message = asl_new(ASL_TYPE_MSG);
 	asl_set(message, "os_log(3)", "TRUE");
-	asl_set(message, ASL_KEY_MSG, decodedMessage);
 	asl_set(message, "Subsystem", log->subsystem);
 	asl_set(message, "Category", log->category);
 
-	free(decodedMessage);
-
+	int level;
 	switch (type) {
 		case OS_LOG_TYPE_DEBUG:
-			asl_set(message, ASL_KEY_LEVEL, ASL_STRING_DEBUG);
+			level = ASL_LEVEL_DEBUG;
 			break;
 
 		case OS_LOG_TYPE_INFO:
 		case OS_LOG_TYPE_DEFAULT:
-			asl_set(message, ASL_KEY_LEVEL, ASL_STRING_INFO);
+			level = ASL_LEVEL_INFO;
 			break;
 
 		case OS_LOG_TYPE_ERROR:
-			asl_set(message, ASL_KEY_LEVEL, ASL_STRING_ERR);
+			level = ASL_LEVEL_ERR;
 			break;
 
 		case OS_LOG_TYPE_FAULT:
-			asl_set(message, ASL_KEY_LEVEL, ASL_STRING_ALERT);
+			level = ASL_LEVEL_ALERT;
 			break;
 
 		default:
 			libtrace_assert(false, "Invalid os_log_type_t not caught by precondition");
 	}
 
-	asl_send(NULL, message);
+	char *decodedBuffer = os_log_decode_buffer(format, buf, size);
+	asl_log(NULL, message, level, "%s", decodedBuffer);
 	asl_release(message);
+	free(decodedBuffer);
 }
 
 #pragma mark Legacy Functions
