@@ -453,7 +453,6 @@
 					"-lunwind",
 					"-lsystem_darwin",
 					"-ldispatch",
-					"-lxpc",
 					"-Wl,-upward-lobjc",
 					"-lCrashReporterClient",
 				);
@@ -532,7 +531,6 @@
 					"-lunwind",
 					"-lsystem_darwin",
 					"-ldispatch",
-					"-lxpc",
 					"-Wl,-upward-lobjc",
 					"-lCrashReporterClient",
 				);
