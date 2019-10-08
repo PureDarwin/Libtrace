@@ -224,7 +224,7 @@
 		1F37F7D52138C2A100321E25 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "PureDarwin Project";
 				TargetAttributes = {
 					1F26B5282302285000071CCA = {
@@ -298,6 +298,7 @@
 		1F26B52A2302285000071CCA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3P242C9ES5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -307,6 +308,7 @@
 		1F26B52B2302285000071CCA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3P242C9ES5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
