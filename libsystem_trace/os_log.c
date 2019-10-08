@@ -29,21 +29,40 @@
 #include "libtrace_assert.h"
 #include <asl.h>
 
+// FIXME: For some reason, this isn't showing up in a C file properly.
+#define OS_OBJECT_OBJC_CLASS_DECL(name) \
+	extern void *OS_OBJECT_CLASS_SYMBOL(name) \
+	asm(OS_OBJC_CLASS_RAW_SYMBOL_NAME(OS_OBJECT_CLASS(name)))
+#define OS_OBJECT_CLASS_SYMBOL(name) OS_##name##_class
+#define OS_OBJC_CLASS_RAW_SYMBOL_NAME(name) "_OBJC_CLASS_$_" OS_STRINGIFY(name)
+
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-extern const void *_os_log_class(void);
-extern struct os_log_s _os_log_default, _os_log_disabled;
+OS_OBJECT_OBJC_CLASS_DECL(os_log);
 
-void _libtrace_init(void) {
-	_os_log_default.isa = _os_log_class();
-	_os_log_disabled.isa = _os_log_class();
-}
+struct os_log_s _os_log_disabled = {
+	.isa = NULL,
+	.ref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
+	.xref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
+	.magic = OS_LOG_DISABLED_MAGIC,
+	.subsystem = "",
+	.category = ""
+};
+
+struct os_log_s _os_log_default = {
+	.isa = NULL,
+	.ref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
+	.xref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
+	.magic = OS_LOG_DEFAULT_MAGIC,
+	.subsystem = "",
+	.category = ""
+};
 
 os_log_t os_log_create(const char *subsystem, const char *category) {
 	libtrace_precondition(subsystem != NULL, "subsystem cannot be NULL");
 	libtrace_precondition(category != NULL, "category cannot be NULL");
 
-	os_log_t value = (os_log_t)_os_object_alloc(_os_log_class(), sizeof(os_log_t));
+	os_log_t value = (os_log_t)_os_object_alloc(OS_OBJECT_CLASS_SYMBOL(os_log), sizeof(os_log_t));
 	value->magic = OS_LOG_MAGIC;
 	value->subsystem = strdup(subsystem);
 	value->category = strdup(category);

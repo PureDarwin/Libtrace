@@ -48,27 +48,3 @@
 }
 
 @end
-
-#pragma mark -
-
-__XNU_PRIVATE_EXTERN const void *_os_log_class(void) {
-	return (const void *)[OS_os_log class];
-}
-
-struct os_log_s _os_log_disabled = {
-	.isa = NULL,
-	.ref_cnt = 0xFFFFFFFF,
-	.xref_cnt = 0xFFFFFFFF,
-	.magic = OS_LOG_DISABLED_MAGIC,
-	.subsystem = "",
-	.category = ""
-};
-
-struct os_log_s _os_log_default = {
-	.isa = NULL,
-	.ref_cnt = 0xFFFFFFFF,
-	.xref_cnt = 0xFFFFFFFF,
-	.magic = OS_LOG_DEFAULT_MAGIC,
-	.subsystem = "",
-	.category = ""
-};
