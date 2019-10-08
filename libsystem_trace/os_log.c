@@ -69,8 +69,14 @@ _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, ui
 
 	aslmsg message = asl_new(ASL_TYPE_MSG);
 	asl_set(message, "os_log(3)", "TRUE");
-	asl_set(message, "Subsystem", log->subsystem);
-	asl_set(message, "Category", log->category);
+
+	const char *subsystem = log->subsystem;
+	if (strlen(subsystem) == 0) subsystem = "(default)";
+	const char *category = log->category;
+	if (strlen(category) == 0) category = "(default)";
+
+	asl_set(message, "Subsystem", subsystem);
+	asl_set(message, "Category", category);
 
 	int level;
 	switch (type) {
