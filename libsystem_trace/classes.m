@@ -59,7 +59,7 @@ struct os_log_s _os_log_disabled = {
 	.isa = NULL,
 	.ref_cnt = 0xFFFFFFFF,
 	.xref_cnt = 0xFFFFFFFF,
-	.magic = OS_LOG_DEFAULT_MAGIC,
+	.magic = OS_LOG_DISABLED_MAGIC,
 	.subsystem = "",
 	.category = ""
 };
