@@ -225,3 +225,16 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 	sbuf_delete(sbuf);
 	return retval;
 }
+
+__XNU_PRIVATE_EXTERN
+const char *os_log_buffer_to_hex_string(const uint8_t *buffer, uint32_t buffer_size) {
+	struct sbuf *sbuf = sbuf_new_auto();
+	while (buffer_size-- != 0) {
+		sbuf_printf(sbuf, "%02X", buffer[0]);
+		buffer++;
+	}
+
+	const char *retval = strdup(sbuf_data(sbuf));
+	sbuf_delete(sbuf);
+	return retval;
+}
