@@ -58,11 +58,6 @@ struct os_log_s _os_log_default = {
 	.category = ""
 };
 
-void _libtrace_init(void) {
-	_os_log_disabled.isa = OS_OBJECT_CLASS_SYMBOL(os_log);
-	_os_log_default.isa = OS_OBJECT_CLASS_SYMBOL(os_log);
-}
-
 os_log_t os_log_create(const char *subsystem, const char *category) {
 	libtrace_precondition(subsystem != NULL, "subsystem cannot be NULL");
 	libtrace_precondition(category != NULL, "category cannot be NULL");
