@@ -79,7 +79,7 @@ bool os_log_type_enabled(os_log_t log, os_log_type_t type) {
 __XNU_PRIVATE_EXTERN
 char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t bufferSize);
 __XNU_PRIVATE_EXTERN
-const char *os_log_buffer_to_hex_string(const uint8_t *buffer, uint32_t buffer_size)
+const char *os_log_buffer_to_hex_string(const uint8_t *buffer, uint32_t buffer_size);
 
 void
 _os_log_impl(void *dso, os_log_t log, os_log_type_t type, const char *format, uint8_t *buf, uint32_t size) {
