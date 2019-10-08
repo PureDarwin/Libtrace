@@ -439,20 +439,18 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
+					"-nostdlib",
 					"-umbrella",
 					System,
 					"-L/usr/lib/system",
-					"-lsystem_c",
 					"-lsystem_kernel",
 					"-lsystem_platform",
-					"-lmacho",
-					"-ldyld",
-					"-lcompiler_rt",
 					"-lsystem_malloc",
-					"-lsystem_blocks",
-					"-lunwind",
-					"-lsystem_darwin",
+					"-lsystem_platform",
+					"-lsystem_asl",
 					"-ldispatch",
+					"-lsystem_c",
+					"-ldyld",
 					"-Wl,-upward-lobjc",
 					"-lCrashReporterClient",
 				);
@@ -517,20 +515,18 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = (
+					"-nostdlib",
 					"-umbrella",
 					System,
 					"-L/usr/lib/system",
-					"-lsystem_c",
 					"-lsystem_kernel",
 					"-lsystem_platform",
-					"-lmacho",
-					"-ldyld",
-					"-lcompiler_rt",
 					"-lsystem_malloc",
-					"-lsystem_blocks",
-					"-lunwind",
-					"-lsystem_darwin",
+					"-lsystem_platform",
+					"-lsystem_asl",
 					"-ldispatch",
+					"-lsystem_c",
+					"-ldyld",
 					"-Wl,-upward-lobjc",
 					"-lCrashReporterClient",
 				);
