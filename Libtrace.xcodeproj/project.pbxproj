@@ -54,7 +54,7 @@
 		1F08B3B42315F51600869729 /* Install ASL Configuration File */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 8;
-			dstPath = /etc/asl;
+			dstPath = /private/etc/asl;
 			dstSubfolderSpec = 0;
 			files = (
 				1F08B3B52315F52200869729 /* org.puredarwin.os_log.asl in Install ASL Configuration File */,
