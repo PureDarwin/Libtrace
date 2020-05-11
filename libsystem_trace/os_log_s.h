@@ -32,8 +32,12 @@
 #include <os/object_private.h>
 #include <os/log.h>
 
-struct os_log_s {
+struct os_log_header {
 	_OS_OBJECT_HEADER(const void *isa, ref_cnt, xref_cnt);
+};
+
+struct os_log_s {
+	struct os_log_header header;
 	uint32_t magic;
 	const char *subsystem;
 	const char *category;
