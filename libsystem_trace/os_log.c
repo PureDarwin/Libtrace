@@ -41,7 +41,7 @@
 OS_OBJECT_OBJC_CLASS_DECL(os_log);
 
 struct os_log_s _os_log_disabled = {
-	.isa = NULL,
+	.isa = &OS_os_log_class,
 	.ref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
 	.xref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
 	.magic = OS_LOG_DISABLED_MAGIC,
@@ -50,7 +50,7 @@ struct os_log_s _os_log_disabled = {
 };
 
 struct os_log_s _os_log_default = {
-	.isa = NULL,
+	.isa = &OS_os_log_class,
 	.ref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
 	.xref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
 	.magic = OS_LOG_DEFAULT_MAGIC,

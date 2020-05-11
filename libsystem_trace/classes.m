@@ -36,11 +36,6 @@
 
 @implementation OS_OBJECT_CLASS(os_log)
 
-+ (void)load {
-	_os_log_disabled.isa = (const void *)[self class];
-	_os_log_default.isa = (const void *)[self class];
-}
-
 - (void)_dispose {
 	struct os_log_s *value = (struct os_log_s *)self;
 	if (value->subsystem != NULL) free((void *)value->subsystem);
