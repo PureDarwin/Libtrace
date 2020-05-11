@@ -66,43 +66,38 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 	bufferIndex++;
 
 	struct sbuf *sbuf = sbuf_new_auto();
-	size_t formatIndex = 0;
-
-	while (formatString[formatIndex] != '\0') {
-		if (formatString[formatIndex] != '%') {
-			sbuf_putc(sbuf, formatString[formatIndex]);
-			formatIndex++;
+	while (formatString[bufferIndex++] != '\0') {
+		if (formatString[bufferIndex] != '%') {
+			sbuf_putc(sbuf, formatString[bufferIndex]);
 			continue;
 		}
 
-		libtrace_assert(formatString[formatIndex] == '%', "next char not % (this shouldn't happen)");
-		formatIndex++;
-
+		libtrace_assert(formatString[bufferIndex] == '%', "next char not % (this shouldn't happen)");
 		libtrace_assert(argsSeen < argCount, "Too many format specifiers in os_log string (expected %d)", argCount);
 
-		if (formatString[formatIndex] == '{') {
-			char *closingBracket = strchr(formatString + formatIndex, '}');
+		privacy_setting_t privacy = privacy_setting_unset;
+		if (formatString[bufferIndex] == '{') {
+			char *closingBracket = strchr(formatString + bufferIndex, '}');
 			*closingBracket = '\0';
 
-			char *attribute = strdup(formatString + formatIndex);
+			char *attribute = strdup(formatString + bufferIndex);
 			*closingBracket = '}';
-			formatIndex += strlen(attribute) + 2;
+			bufferIndex += strlen(attribute) + 2;
 
-			privacy_setting_t privacy = privacy_setting_unset;
 			if (contains_attribute(attribute, "private")) {
 				privacy = privacy_setting_private;
 			} else if (contains_attribute(attribute, "public")) {
 				privacy = privacy_setting_public;
 			}
 
-			while (formatString[formatIndex] == '.' ||
-				   formatString[formatIndex] == '*' ||
-				   isnumber(formatString[formatIndex])) {
-				formatIndex++;
+			while (formatString[bufferIndex] == '.' ||
+				   formatString[bufferIndex] == '*' ||
+				   isnumber(formatString[bufferIndex])) {
+				bufferIndex++;
 			}
 
 			char *formattedArgument = NULL;
-			if (formatString[formatIndex] == 's') {
+			if (formatString[bufferIndex] == 's') {
 				uint8_t length = buffer[bufferIndex];
 				bufferIndex++;
 				formattedArgument = calloc(length + 1, sizeof(char));
@@ -110,7 +105,7 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				bufferIndex += length * sizeof(char);
 
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_private;
-			} else if (formatString[formatIndex] == 'S') {
+			} else if (formatString[bufferIndex] == 'S') {
 				uint8_t length = buffer[bufferIndex];
 				bufferIndex++;
 
@@ -123,7 +118,7 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				free(wideArgument);
 
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_private;
-			} else if (formatString[formatIndex] == 'P') {
+			} else if (formatString[bufferIndex] == 'P') {
 				uint8_t length = buffer[bufferIndex];
 				bufferIndex++;
 
@@ -140,15 +135,15 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				sbuf_delete(dataHex);
 
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_private;
-			} else if (formatString[formatIndex] == '@') {
+			} else if (formatString[bufferIndex] == '@') {
 				// FIXME: Correctly describe Objective-C objects
 				formattedArgument = strdup("<ObjC object>");
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_private;
-			} else if (formatString[formatIndex] == 'm') {
+			} else if (formatString[bufferIndex] == 'm') {
 				bufferIndex++; // skip zero "length"
 				formattedArgument = strdup(strerror(errno));
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
-			} else if (formatString[formatIndex] == 'd') {
+			} else if (formatString[bufferIndex] == 'd') {
 				uint8_t length = buffer[bufferIndex];
 				bufferIndex++;
 
@@ -162,7 +157,7 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				bufferIndex += length;
 				asprintf(&formattedArgument, "%lld", integer);
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
-			} else if (formatString[formatIndex] == 'u') {
+			} else if (formatString[bufferIndex] == 'u') {
 				uint8_t length = buffer[bufferIndex];
 				bufferIndex++;
 
@@ -176,7 +171,7 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				bufferIndex += length;
 				asprintf(&formattedArgument, "%llu", integer);
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
-			} else if (formatString[formatIndex] == 'x') {
+			} else if (formatString[bufferIndex] == 'x') {
 				uint8_t length = buffer[bufferIndex];
 				bufferIndex++;
 
@@ -190,22 +185,22 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 				bufferIndex += length;
 				asprintf(&formattedArgument, "0x%llx", integer);
 				if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
-			} else if (formatString[formatIndex] == 'X') {
-					uint8_t length = buffer[bufferIndex];
-					bufferIndex++;
+			} else if (formatString[bufferIndex] == 'X') {
+				uint8_t length = buffer[bufferIndex];
+				bufferIndex++;
 
-					uint64_t integer;
-					if (length == 1) integer = *(uint8_t *)buffer;
-					else if (length == 2) integer = *(uint16_t *)buffer;
-					else if (length == 4) integer = *(uint32_t *)buffer;
-					else if (length == 8) integer = *(uint64_t *)buffer;
-					else libtrace_assert(false, "Unexpected integer size %d", length);
+				uint64_t integer;
+				if (length == 1) integer = *(uint8_t *)buffer;
+				else if (length == 2) integer = *(uint16_t *)buffer;
+				else if (length == 4) integer = *(uint32_t *)buffer;
+				else if (length == 8) integer = *(uint64_t *)buffer;
+				else libtrace_assert(false, "Unexpected integer size %d", length);
 
-					bufferIndex += length;
-					asprintf(&formattedArgument, "0x%llX", integer);
-					if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
+				bufferIndex += length;
+				asprintf(&formattedArgument, "0x%llX", integer);
+				if (privacy == privacy_setting_unset) privacy = privacy_setting_public;
 			} else {
-				libtrace_assert(false, "Unknown format argument %%%c in os_log() call", formatString[formatIndex]);
+				libtrace_assert(false, "Unknown format argument %%%c in os_log() call", formatString[bufferIndex]);
 			}
 
 			if (privacy == privacy_setting_public) {
