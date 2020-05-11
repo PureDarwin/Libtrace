@@ -36,10 +36,11 @@
 
 @implementation OS_OBJECT_CLASS(os_log)
 
-- (void)_dispose {
+- (void)dealloc {
 	struct os_log_s *value = (struct os_log_s *)self;
 	if (value->subsystem != NULL) free((void *)value->subsystem);
 	if (value->category != NULL) free((void *)value->category);
+	[super dealloc];
 }
 
 @end
