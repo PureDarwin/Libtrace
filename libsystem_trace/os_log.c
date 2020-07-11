@@ -42,7 +42,7 @@ OS_OBJECT_OBJC_CLASS_DECL(os_log);
 
 struct os_log_s _os_log_disabled = {
 	.header = {
-		.isa = &OS_os_log_class,
+		.isa = &OS_OBJECT_CLASS_SYMBOL(os_log),
 		.ref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
 		.xref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
 	},
@@ -53,7 +53,7 @@ struct os_log_s _os_log_disabled = {
 
 struct os_log_s _os_log_default = {
 	.header = {
-		.isa = &OS_os_log_class,
+		.isa = &OS_OBJECT_CLASS_SYMBOL(os_log),
 		.ref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
 		.xref_cnt = _OS_OBJECT_GLOBAL_REFCNT,
 	},
@@ -66,7 +66,7 @@ os_log_t os_log_create(const char *subsystem, const char *category) {
 	libtrace_precondition(subsystem != NULL, "subsystem cannot be NULL");
 	libtrace_precondition(category != NULL, "category cannot be NULL");
 
-	os_log_t value = (os_log_t)_os_object_alloc(OS_OBJECT_CLASS_SYMBOL(os_log), sizeof(os_log_t) - sizeof(struct os_log_header));
+	os_log_t value = (os_log_t)_os_object_alloc(&OS_OBJECT_CLASS_SYMBOL(os_log), sizeof(struct os_log_s) - sizeof(struct os_log_header));
 	value->magic = OS_LOG_MAGIC;
 	value->subsystem = strdup(subsystem);
 	value->category = strdup(category);
