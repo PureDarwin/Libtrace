@@ -77,12 +77,12 @@ char *os_log_decode_buffer(const char *formatString, uint8_t *buffer, uint32_t b
 
 		privacy_setting_t privacy = privacy_setting_unset;
 		if (formatString[bufferIndex] == '{') {
-			char *closingBracket = strchr(formatString + bufferIndex, '}');
-			*closingBracket = '\0';
+			const char *closingBracket = strchr(formatString + bufferIndex, '}');
+			size_t brlen = closingBracket - (formatString + bufferIndex);
+			char *attribute = (char *)malloc(brlen + 1);
 
-			char *attribute = strdup(formatString + bufferIndex);
-			*closingBracket = '}';
-			bufferIndex += strlen(attribute) + 2;
+			strlcpy(attribute, formatString + bufferIndex, brlen + 1);
+			bufferIndex += strlen(attribute) + 1;
 
 			if (contains_attribute(attribute, "private")) {
 				privacy = privacy_setting_private;
